@@ -1,0 +1,6 @@
+先安装依赖
+pip install clouddrive==0.0.10.4
+
+然后去config.ini里填好配置
+
+python main.py
