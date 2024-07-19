@@ -29,7 +29,7 @@ cover_mapping = {
 }
 
 # 定义封面图片所在的文件夹路径
-COVER_FOLDER_PATH = "/Users/shenxian/沈闲云/沈闲/封面/emby封面"
+COVER_FOLDER_PATH = ""
 
 
 def image_to_base64(image_path):
