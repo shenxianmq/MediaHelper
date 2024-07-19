@@ -6,8 +6,6 @@ __pycache__
 # 忽略所有 .idea 目录
 .idea/
 
-auto_symlink/
-
 download/
 
 config/*
