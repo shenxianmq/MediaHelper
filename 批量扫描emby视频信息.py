@@ -87,7 +87,6 @@ def scan_item(item_id: str):
 def main():
     total_num = 0
     all_movies = get_all_movies()
-    num_threads = 5  # 设置线程数
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
         futures = [executor.submit(scan_item, item["Id"]) for item in all_movies]
@@ -108,4 +107,5 @@ if __name__ == "__main__":
     # 配置Emby服务器信息
     EMBY_SERVER_URL = "http://127.0.0.1:8096"
     API_KEY = "5b2d4062d9124a6ca9e7eab015251f53"
+    num_threads = 5  # 设置线程数
     main()
