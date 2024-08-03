@@ -92,7 +92,7 @@ def main():
             res = scan_item(item_id=item_id)
             if res:
                 total_num += 1
-                logger.info(f"已成功扫描片头信息:{path}\n共扫描{total_num}个视频")
+                logger.info(f"已成功扫描视频信息:{path}\n共扫描{total_num}个视频")
         except:
             continue
 
