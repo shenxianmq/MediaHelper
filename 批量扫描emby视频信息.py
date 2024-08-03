@@ -1,6 +1,7 @@
 import requests
 import logging
 import os
+import concurrent.futures
 
 working_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(working_directory)
@@ -82,19 +83,25 @@ def scan_item(item_id: str):
 
 
 # 主函数
+@measure_time
 def main():
     total_num = 0
     all_movies = get_all_movies()
-    for item in all_movies:
-        try:
-            item_id = item["Id"]
-            path = item["Path"]
-            res = scan_item(item_id=item_id)
-            if res:
-                total_num += 1
-                logger.info(f"已成功扫描视频信息:{path}\n共扫描{total_num}个视频")
-        except:
-            continue
+    num_threads = 5  # 设置线程数
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+        futures = [executor.submit(scan_item, item["Id"]) for item in all_movies]
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                if future.result():
+                    total_num += 1
+                    logger.info(
+                        f"已成功扫描视频信息:{all_movies[futures.index(future)]['Path']}\n共扫描{total_num}个视频"
+                    )
+            except:
+                continue
+
+    logger.info(f"总共扫描了 {total_num} 个视频")
 
 
 if __name__ == "__main__":
